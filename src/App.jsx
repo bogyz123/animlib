@@ -23,11 +23,11 @@ function App() {
     );
   };
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="animlib">
       <Routes>
         <Route element={<Sidebar sidebarExpanded={sidebarExpanded} sidebarState={sidebarState} expandSidebar={expandSidebar} setSidebarState={setSidebarState} />} path="/">
           <Route path="/typewriter" element={<Typewriter isMenuOpened={sidebarExpanded} />}></Route>
-          <Route index element={<LoadingScreen />}></Route>
+          <Route index element={<Homepage />}></Route>
           <Route path="gradient-borders" element={<GradientBorders />} />
           <Route path="gradient-text" element={<p>a</p>} />
         </Route>
