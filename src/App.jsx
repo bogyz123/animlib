@@ -15,12 +15,19 @@ function App() {
   const expandSidebar = useCallback(() => {
     setSidebarExpanded((prev) => !prev);
   }, []);
+  const LoadingScreen = () => {
+    return (
+      <div className="flex w-full h-screen bg-teal-900">
+        <p>x</p>
+      </div>
+    );
+  };
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Sidebar sidebarExpanded={sidebarExpanded} sidebarState={sidebarState} expandSidebar={expandSidebar} setSidebarState={setSidebarState} />} path="/">
           <Route path="/typewriter" element={<Typewriter isMenuOpened={sidebarExpanded} />}></Route>
-          <Route index element={<Homepage />}></Route>
+          <Route index element={<LoadingScreen />}></Route>
           <Route path="gradient-borders" element={<GradientBorders />} />
           <Route path="gradient-text" element={<p>a</p>} />
         </Route>
