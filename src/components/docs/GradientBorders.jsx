@@ -1,5 +1,5 @@
-import CodeSample from "./CodeSample";
-import Document from "./Document";
+import CodeSample from "../CodeSample";
+import Document from "../Document";
 
 export default function GradientBorders() {
   return (

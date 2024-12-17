@@ -7,6 +7,9 @@ export default {
         dark: "rgb(16,12,36)",
         card: "rgb(29, 23, 58)",
       },
+      backgroundImage: {
+        gradient: "linear-gradient(to right, red, blue, purple, red)",
+      },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
       },
