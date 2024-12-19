@@ -1,8 +1,33 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## animlib (*very early*)  [site](https://bogyz123.github.io/animlib/)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+animlib is a docs website that (will) contain all the common CSS designs/effects in one place.
+
+
+
+## docs to write
+
+- Parallax Effect
+- Advanced card animations
+- Neumorphism effect
+- Element change/shift upon scrolling
+- more
+
+
+## todo
+
+- [ ] cleanup tailwind code
+- [x] make routing more efficient 
+- [x] utilize usememo and usecallbacks for performance
+- [ ] add a real loading screen
+- [x] add homepage elements animations when site loads
+- [ ] make doc pages more readable (headers, better font, smart font size usage)
+- [ ] make contact me functional and animated
+- [x] make search-bar functional in the <Sidebar /> component
+- [ ] make docs itself more understandable (just demo currently)
+- [ ] make docs interactable where user can change variables and interact with the result
+- [ ] make <CodeCard > have options to copy code, and more.
+- [ ] use localstorage to track whether user visited the site before to NOT show the loading screen again
+- [ ] revamp all code to make it more readable and memory efficient, reuse whatever possible.
+- a lot more
