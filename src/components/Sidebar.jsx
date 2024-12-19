@@ -88,14 +88,14 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
             </li>
           </ul>
           <div className="bg-purple-500 text-center rounded-md p-1 md:p-2 cursor-pointer hover:bg-purple-600">Contact Me</div>
-          <div className={`absolute  h-[20%]  top-1/2 translate-y-[-50%]  flex items-center justify-center right-0 cursor-pointer border-l border-gray-700   ${sidebarState.expanded && "visible"}`} onClick={expandSidebar}>
+          <div className={`absolute  md:h-[20%] h-[10%]  top-1/2 translate-y-[-50%]  flex items-center justify-center right-0 cursor-pointer border-l border-gray-700   ${sidebarState.expanded && "visible"}`} onClick={expandSidebar}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
             </svg>
           </div>
         </div>
       </div>
-      <div className="fixed top-1/2 left-0 ">
+      <div className="fixed top-1/2 left-0  z-50">
         <div className={`top-1/2 right-4 cursor-pointer ${sidebarState.expanded ? "hidden" : "visible"}   px-2 md:pl-4 w-fit h-[70%] flex  items-center my-auto`} onClick={expandSidebar}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />

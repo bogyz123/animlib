@@ -7,6 +7,7 @@ import Homepage from "./components/Homepage";
 import NotFound from "./components/NotFound";
 import Sidebar from "./components/Sidebar";
 import "./index.css";
+import Parallax from "./components/docs/Parallax";
 
 function App() {
   const [sidebarState, setSidebarState] = useState({
@@ -25,6 +26,10 @@ function App() {
         gradientBorders: {
           url: "gradient-borders",
           text: "Gradient Borders",
+        },
+        parallax: {
+          url: "parallax",
+          text: "Parallax",
         },
       },
     },
@@ -48,6 +53,7 @@ function App() {
           <Route path="gradient-borders" element={<GradientBorders />} />
           <Route path="gradient-text" element={<GradientText />} />
           <Route path="*" element={<NotFound sidebarState={sidebarState} expandSidebar={expandSidebar} setSidebarState={setSidebarState} />} />
+          <Route path="/parallax" element={<Parallax />} />
         </Route>
       </Routes>
     </BrowserRouter>
