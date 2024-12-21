@@ -2,5 +2,6 @@
   "bg-clip-text": "Clips the background of an element into inner text.",
   "text-transparent": "Makes the text stroke transparent.",
   "linear-gradient": "Horizontal gradient background.",
-  "filter: blur(amount)": "Blurs an element by specified amount."
+  "filter: blur(amount)": "Blurs an element by specified amount.",
+  "background-attachment: fixed": "Fixes the background of an element so it doesn't move upon scrolling."
 }

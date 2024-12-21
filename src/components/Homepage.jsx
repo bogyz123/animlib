@@ -19,7 +19,7 @@ export default function Homepage() {
       return () => clearTimeout(reset);
     }, [9000]);
     // this is a function for the typewriter automatic animation on the homepage.
-    // every 10 seconds, it begins the typewriter animation and displays additional info about the typewriter, and when it's done (4500ms)
+    // every 9 seconds, it begins the typewriter animation and displays additional info about the typewriter, and when it's done (4500ms)
     // it then hides the additional info and brings back the 'typewriter effect' text to normal position
     // also, we clean up both interval and timeout (:
     return () => clearInterval(interval);

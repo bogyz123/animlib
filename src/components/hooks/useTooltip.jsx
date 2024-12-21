@@ -3,10 +3,8 @@ import data from "../../assets/data.json";
 
 const useTooltip = () => {
   const handleTooltipClick = useCallback((e) => {
-    console.log("called.");
     const isHighlightedElement = e.target.classList.contains("highlighted");
     if (!isHighlightedElement) {
-      console.log(e.target.textContent);
       return;
     }
     console.log("is tooltip.");

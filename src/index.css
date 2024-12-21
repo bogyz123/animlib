@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 html,
 body {
   margin: 0;
@@ -11,12 +11,37 @@ body {
   box-sizing: border-box;
   user-select: none;
 }
+* {
+  box-sizing: border-box;
+  outline: 3px solid red;
+}
 html {
-  background-color: rgb(16,12,36);
+  background-color: rgb(16, 12, 36);
 }
 .highlighted {
-  @apply text-red-500 font-bold cursor-pointer hover:text-red-600 shadow shadow-purple-500 px-1 py-0.5 mx-0.5
+  @apply text-red-500 font-bold cursor-pointer hover:text-red-600 shadow shadow-purple-500 px-1 py-0.5 mx-0.5;
 }
 .list {
-  @apply flex flex-col gap-y-2 md:gap-y-2
+  @apply flex flex-col gap-y-2 md:gap-y-2;
+}
+@layer utilities {
+  .scrollbars::-webkit-scrollbar {
+    width: 20px;
+    height: 15px;
+  }
+
+  .scrollbars::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #36036c;
+  }
+
+  .scrollbars::-webkit-scrollbar-thumb {
+    background: #1b0353;
+    border-radius: 100vh;
+    border: 3px solid #f6f7ed;
+  }
+
+  .scrollbars::-webkit-scrollbar-thumb:hover {
+    background: #19013f;
+  }
 }

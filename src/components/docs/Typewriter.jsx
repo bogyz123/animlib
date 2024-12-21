@@ -12,7 +12,7 @@ export default function Typewriter() {
         <Document.Content>
           <p>The typewriter effect can be created without JavaScript, just plain CSS.</p>
           <p>First off, we will create an animation from width:0 to width:100% so it gives a typing effect, it will take 4 seconds to complete.</p>
-          <div className="p-2">
+          <div className="p-2 ">
             <CodeSample>
               {`
   @keyframes typing {
