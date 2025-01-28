@@ -22,7 +22,7 @@ export default function Contact() {
     }));
   };
   return (
-    <div className="bg-card flex flex-col md:flex-row p-2 md:p-6 rounded-md justify-between h-full">
+    <div className="bg-card flex flex-col md:flex-row p-2 md:p-6 rounded-md justify-between h-full text-white">
       <div className="flex flex-col md:justify-between ">
         <h1 className="font-bold text-base md:text-xl">Contact Me</h1>
         <p className="font-inter text-sm">Email | bogdandjakovic123@gmail.com</p>

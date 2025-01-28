@@ -1,22 +1,347 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 html,
 body {
   margin: 0;
   padding: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100%;
   box-sizing: border-box;
   user-select: none;
+  font-family: 'Inter', sans-serif;
 }
+#homepage-container {
+  background:linear-gradient(to right bottom, #100c24 50%, #1d0547 50.3%);
+}
+.sans {
+  font-family: "Open Sans", sans-serif;
+}
+
 html {
-  background-color: rgb(16,12,36);
+  background-color: rgb(16, 12, 36);
 }
+
+.animated-dash {
+  animation: dash 0.5s forwards;
+  transition: width 0.5s ease, height 0.5s ease;
+}
+
+.document-explanation {
+  border-left: 3px solid rgb(73, 0, 128);
+  position: relative;
+}
+
+.document-explanation::after,
+.document-explanation::before {
+  content: "";
+  border-radius: 10px;
+  background-color: rgb(73, 0, 128);
+}
+
+.document-explanation::before {
+  width: 50px;
+  height: 3px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.document-explanation::after {
+  width: 50px;
+  height: 3px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+@keyframes dash {
+  from {
+    scale: 0.5;
+  }
+  to {
+    transform: translateX(0);
+    scale: 1;
+  }
+}
+
 .highlighted {
-  @apply text-red-500 font-bold cursor-pointer hover:text-red-600 shadow shadow-purple-500 px-1 py-0.5 mx-0.5
+  @apply text-red-500 font-bold cursor-pointer hover:text-red-600 shadow shadow-red-500 px-1 py-0.5 mx-0.5;
+  position:relative;
+}
+
+.highlighted::before,
+.highlighted::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.highlighted::before {
+  top: -100%;
+  height: 20%;
+  left:0;
+  background-color: crimson;
+  z-index: -10;
+  filter: blur(20px);
+  opacity: 0;
+}
+
+.highlighted::after {
+  top: 150%;
+  height: 20%;
+  left:0;
+  background-color: crimson;
+  z-index: -10;
+  filter: blur(20px);
+  opacity: 0;
+}
+
+.highlighted:hover::after,
+.highlighted:hover::before {
+  opacity: 1;
+}
+
+.example-item h1 {
+  transition: all 0.5s ease;
+}
+
+.example-item:hover > .example-item-description {
+  transition: all 1s ease;
+  opacity: 1;
+  transition-duration: 0.3s;
+  transform: translateY(0);
+}
+
+.example-item:hover .example-item-title {
+  transform: translateY(-100%);
+}
+.example-item {
+  top: 50%;
+  left: 50%;
+  transform:translateX(-50%) translateY(-50%) skew(-20deg) translateY(calc(70px * var(--offset))) translateX(calc(var(--offset)*-20px));
+  position: absolute;
+  color:white;
+  transition: transform 2s cubic-bezier(0.25, 1, 0.5, 1), filter 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.example-item-popped {
+  background-color: red;
+}
+
+
+@media screen and (max-width: 765px) {
+  .example-item {
+    transform:translateX(-45%) translateY(-50%) skew(-10deg) translateY(calc(70px * var(--offset)));
+  }
+}
+.example-item:nth-child(1) {
+  opacity: 0.3;
+  filter:blur(1.5px);
+}
+.example-item:nth-child(2) {
+  opacity: 0.5;
+  filter:blur(1px);
+}
+.example-item:nth-child(3) {
+  opacity: 0.6;
+  filter:blur(0.5px);
+}
+.example-item:nth-child(4) {
+  opacity: 0.7;
+  filter:blur(0.3px);
 }
 .list {
-  @apply flex flex-col gap-y-2 md:gap-y-2
+  @apply flex flex-col gap-y-2 md:gap-y-2;
+}
+.animate-timelineFade {
+  animation: timelineFade 1ms linear both;
+  animation-timeline: scroll();
+  animation-range-end: 70%;
+  animation-range-start: 20%;
+}
+
+.animate-timelineZoom {
+  animation: timelineZoom 1ms linear both;
+  animation-timeline: scroll();
+  animation-range-end: 70%;
+  animation-range-start: 20%;
+}
+
+.animate-blur {
+  animation: timeline-blur 1ms linear both;
+  animation-timeline: view();
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.animate-test {
+  animation: testz 1ms linear;
+  animation-timeline: view();
+  transform-origin: left;
+}
+
+@keyframes testz {
+  0% {
+    opacity: 0;
+    scale: 0 1;
+  }
+  30% {
+    opacity: 1;
+    scale: 1 1;
+  }
+  80%, 100% {
+    opacity: 0;
+    scale: 0 1;
+  }
+}
+
+.animate-zoomBg {
+  animation: zoomBg linear both;
+  animation-timeline: view();
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 400px 400px;
+  animation-range-end: 60%;
+}
+
+.animated-timelineDashIn {
+  animation: timelineDashIn 1ms linear;
+  animation-timeline: view();
+  animation-range-end: 50%;
+}
+
+.animate-timelineInline {
+  animation: timelineInline 1ms linear;
+  animation-timeline: scroll(root);
+}
+
+.animate-timelineInline[data-direction="right"] {
+  animation-direction: reverse;
+}
+
+@keyframes timelineInline {
+  to {
+    transform: translateX(-500%);
+  }
+}
+
+@keyframes timelineDashIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animated-observer {
+  animation: animate-observer .5s linear both ;
+}
+
+@keyframes animate-observer {
+  from {
+    transform: skew(30deg) translateX(-100%);
+  }
+  to {
+    transform: translateX(0) skew(0);
+  }
+}
+
+@keyframes zoomBg {
+  to {
+    background-size: 1920px 1080px;
+    opacity: 0;
+  }
+}
+
+@keyframes timeline-blur {
+  0% {
+    filter: blur(40px);
+    scale: 0;
+  }
+  45%, 55% {
+    filter: blur(0);
+    scale: 2;
+  }
+  100% {
+    filter: blur(40px);
+    scale: 1;
+  }
+}
+
+@keyframes timelineZoom {
+  from {
+    scale: 1;
+  }
+  to {
+    scale: 1.5;
+  }
+}
+
+@keyframes timelineFade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.animated-fade {
+  animation: fade linear forwards;
+  animation-timeline: view();
+  animation-range-start: 200px;
+  animation-range-end: cover;
+}
+
+@keyframes fade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes test {
+  to {
+    scale: 0 100%;
+  }
+}
+
+@animated-fromLeft {
+  animation: fromLeft 1s ease-out forwards;
+}
+
+@keyframes fromLeft { 
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@layer utilities {
+  .scrollbars::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+  }
+
+  .scrollbars::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #36036c;
+  }
+
+  .scrollbars::-webkit-scrollbar-thumb {
+    background: #1b0353;
+    border-radius: 100vh;
+    border: 3px solid #2c0771;
+  }
+
+  .scrollbars::-webkit-scrollbar-thumb:hover {
+    background: #19013f;
+  }
 }

@@ -1,19 +1,55 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 
-const CodeSample = memo(function CodeSample({ children }) {
-  const copyCode = (code) => {
-    navigator.clipboard.writeText(code);
+const CodeSample = memo(function CodeSample({ fontSize, pages, language }) {
+  const [copied, setCopied] = useState(false);
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const next = () => {
+    if (currentPageIndex < pages.length - 1) {
+      setCurrentPageIndex((prev) => prev + 1);
+    }
+  };
+  const prev = () => {
+    if (currentPageIndex > 0) {
+      setCurrentPageIndex((prev) => prev - 1);
+    }
+  };
+  const copyCode = async (code) => {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
   };
 
   return (
-    <div className="bg-card relative overflow-x-auto rounded-lg p-2 md:p-4 text-sm font-mono whitespace-pre-wrap max-w-fit">
-      {children}
-      <div className="absolute top-1 right-1 cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 hover:stroke-slate-100" onClick={() => copyCode(children)}>
+    <>
+      <div className="w-full flex bg-card rounded-md rounded-b-none justify-end translate-y-1 p-2">
+        <div className={`absolute top-0 md:top-1 left-1/2 -translate-x-[50%] text-sm`} style={{ color: language?.[currentPageIndex] === "JavaScript" ? "orange" : "crimson" }}>
+          {language?.[currentPageIndex]}
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`cursor-pointer size-6 ${copied ? "hidden" : "block"}`} onClick={() => copyCode(pages?.[currentPageIndex])}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
         </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`size-6 ${copied ? "block animate-pulse" : "hidden"}`}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
       </div>
-    </div>
+      <div className={`max-h-[250px] scrollbars bg-card relative  p-4 md:p-6 lg:p-7 rounded-md whitespace-pre-wrap max-w-[750px] font-mono overflow-x-auto text-${fontSize} `}>
+        <div className="-translate-x-[100%] animated-dash" key={currentPageIndex}>
+          {pages && pages[currentPageIndex]}
+        </div>
+      </div>
+      <div className="bg-card flex justify-end rounded-md rounded-t-none -translate-y-1 p-2">
+        {pages && pages.length > 1 && (
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="size-6 cursor-pointer" onClick={prev}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
+          </svg>
+        )}
+        <span className="text-sm">{pages && `${currentPageIndex + 1}/${pages.length}`}</span>
+        {pages && pages.length > 1 && (
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 cursor-pointer" onClick={next}>
+            <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+          </svg>
+        )}
+      </div>
+    </>
   );
 });
 export default CodeSample;

@@ -1,6 +1,32 @@
 {
-  "bg-clip-text": "Clips the background of an element into inner text.",
-  "text-transparent": "Makes the text stroke transparent.",
-  "linear-gradient": "Horizontal gradient background.",
-  "filter: blur(amount)": "Blurs an element by specified amount."
+  "bg-clip-text": {
+    "explanation": "Clips the background of an element into inner text.",
+    "supportedBy": ["Chrome", "Edge"],
+    "unsupportedBy": null
+  },
+  "text-transparent": {
+    "explanation": "Makes the text stroke transparent.",
+    "supportedBy": ["Chrome", "Edge"],
+    "unsupportedBy": null
+  },
+  "linear-gradient": {
+    "explanation": "Horizontal gradient background.",
+    "supportedBy": ["Chrome", "Edge"],
+    "unsupportedBy": null
+  },
+  "filter: blur(amount)": {
+    "explanation": "Blurs an element by specified amount.",
+    "supportedBy": ["Chrome", "Edge"],
+    "unsupportedBy": null
+  },
+  "background-attachment: fixed": {
+    "explanation": "Fixes the background of an element so it doesn't move upon scrolling.",
+    "supportedBy": ["Chrome", "Edge"],
+    "unsupportedBy": null
+  },
+  "animation-steps": {
+    "explanation": "Sets the steps it will take to complete the animation.",
+    "supportedBy": ["Chrome", "Edge"],
+    "unsupportedBy": null
+  }
 }

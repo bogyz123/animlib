@@ -1,13 +1,17 @@
 import { useCallback, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router";
 import GradientBorders from "./components/docs/GradientBorders";
 import GradientText from "./components/docs/GradientText";
+import Parallax from "./components/docs/Parallax";
+import Blur from "./components/docs/scrolling/Blur";
+import FadeIn from "./components/docs/scrolling/FadeIn";
+import Scrolling, { AnimationTimeline, IntersectionObserverAPI } from "./components/docs/scrolling/Scrolling";
+import { SlideIn } from "./components/docs/scrolling/SlideIn";
 import Typewriter from "./components/docs/Typewriter";
 import Homepage from "./components/Homepage";
 import NotFound from "./components/NotFound";
 import Sidebar from "./components/Sidebar";
 import "./index.css";
-import Parallax from "./components/docs/Parallax";
 
 function App() {
   const [sidebarState, setSidebarState] = useState({
@@ -31,12 +35,28 @@ function App() {
           url: "parallax",
           text: "Parallax",
         },
+        scrolling: {
+          url: "scrolling",
+          text: "Scrolling",
+          children: {
+            parallax: {
+              url: "/parallax",
+              text: "Parallax",
+            },
+            fadeIn: {
+              url: "/scrolling/fade-in",
+              text: "Fade In",
+            },
+            slideIn: {
+              url: "/scrolling/slide-in",
+              text: "Slide In"
+            }
+          },
+        },
       },
     },
-    designs: {
-      visible: false,
-    },
   });
+
   const expandSidebar = useCallback(() => {
     setSidebarState((prev) => ({
       ...prev,
@@ -45,18 +65,25 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter basename="animlib">
+    <HashRouter>
       <Routes>
         <Route element={<Sidebar sidebarState={sidebarState} expandSidebar={expandSidebar} setSidebarState={setSidebarState} />} path="/">
-          <Route path="/typewriter" element={<Typewriter />}></Route>
-          <Route index element={<Homepage />}></Route>
+          <Route path="/typewriter" element={<Typewriter />} />
+          <Route index element={<Homepage />} />
           <Route path="gradient-borders" element={<GradientBorders />} />
           <Route path="gradient-text" element={<GradientText />} />
+          <Route path="parallax" element={<Parallax />} />
           <Route path="*" element={<NotFound sidebarState={sidebarState} expandSidebar={expandSidebar} setSidebarState={setSidebarState} />} />
-          <Route path="/parallax" element={<Parallax />} />
+          <Route path="scrolling" element={<Scrolling />}>
+            <Route path="fade-in" element={<FadeIn />} />
+            <Route path="blur" element={<Blur />} />
+            <Route path="animationtimeline" element={<AnimationTimeline />} />
+            <Route path="intersectionobserver" element={<IntersectionObserverAPI />} />
+            <Route path="slide-in" element={<SlideIn />}/>
+          </Route>
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

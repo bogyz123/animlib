@@ -1,130 +1,109 @@
-import { useNavigate } from "react-router";
-import "../index.css";
-import Contact from "./Contact";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import Contact from "../components/Contact";
+import "../index.css";
+import full from "../assets/full.png";
 
 export default function Homepage() {
   const nav = useNavigate();
   const [animKey, setAnimKey] = useState(0);
-  const [typewriterExpanded, setTypewriterExpanded] = useState(false);
+  const [currentAnimation, setCurrentAnimation] = useState(0);
+  const [areCardsStacked, setAreCardsStacked] = useState(true);
+  const itemData = [{
+    title: 'Typewriter Effect',
+    description: 'Learn how to create a Typewriting Effect without JavaScript in just 2 minutes.',
+    url: '/typewriter'
+  },{
+    title: 'Gradient Borders',
+    description: 'Creating gradient borders has never been so easy. Create one in just ',
+    url: '/gradient-borders'
+  },{
+    title: 'Gradient Text',
+    description: 'Creating gradient texts has never been so easy. Create one in just 1 line of code.',
+    url: '/gradient-text'
+  },{
+    title: 'Parallax Scrolling',
+    description: 'Learn how to create the Parallax scrolling effect.',
+    url: '/parallax'
+   }, {
+    title: 'Scrolling Animations', 
+    description: 'Animation-timeline? IntersectionObserver? Lets learn them all!',
+    url: '/scrolling',
+   }];
   useEffect(() => {
-    const interval = setInterval(() => {
-      setAnimKey((prev) => prev + 1);
-      setTypewriterExpanded(true);
-
-      const reset = setTimeout(() => {
-        setTypewriterExpanded(false);
-      }, 4500);
-
-      return () => clearTimeout(reset);
-    }, [9000]);
-    // this is a function for the typewriter automatic animation on the homepage.
-    // every 10 seconds, it begins the typewriter animation and displays additional info about the typewriter, and when it's done (4500ms)
-    // it then hides the additional info and brings back the 'typewriter effect' text to normal position
-    // also, we clean up both interval and timeout (:
-    return () => clearInterval(interval);
+    const playAnimation = () => { // animation is the main homepage cards showing their descriptions then hiding it, every 4 seconds we swap to next card
+      setCurrentAnimation((prev) => {
+        const next = prev < 4 ? prev + 1 : 0;
+        return next;
+      });
+    }
+    setInterval(playAnimation, 5000);
+    if (full) {
+      const img = new Image();
+      img.src=full;
+      img.onload = () => {
+        sessionStorage.setItem("fullImage", full);
+      }
+    }
+    return () => {
+      clearInterval(playAnimation);
+    }
   }, []);
-  return (
-    <>
-      <div className="w-full h-screen box-border flex text-white">
-        <div className="w-full flex-grow text-sm md:text-base flex flex-col  ">
-          <div className="flex flex-col  max-w-[90%] mx-auto p-2 md:p-5 ">
-            <h1 className="font-bold text-base md:text-xl transition-transform">AnimLib | Animations | Designs</h1>
-            <p className="text-gray-300">
-              Learn the most common CSS animations, designs, practices in <span className="text-green-600">one place.</span>
-            </p>
+  const navigateTo = (where) => {
+   if (!areCardsStacked) {
+    nav(where);
+   }
+   else {
+    const cards = document.querySelectorAll(".example-item");
+    if (cards.length > 0) {
+      cards.forEach((card) => {
+       card.style.transform = "translateX(0) translateY(0) skew(0) rotate(0)";
+       card.style.filter = "blur(0)";
+       card.style.position = "static";
+       card.style.opacity = "1";
+       card.style.width = "100%";
+      });
+      setAreCardsStacked(false);
+    }
+   }
+  }
+  
+  const renderItems = () => {
+    return itemData.map((item, index) => {
+      return (
+        <div style={{ '--offset': `${index-1}`}} className={`${index === itemData.length-1 && 'col-span-full mb-2'}  ${areCardsStacked ? "w-[70%] md:w-[50%] hover:example-item-popped" : "w-full"} font-inter  bg-card rounded-lg p-6 md:p-8 lg:p-10 flex flex-col justify-center items-center example-item cursor-pointer relative`} onClick={() => navigateTo(item.url)} >
+          <h1 className={`${index === currentAnimation && !areCardsStacked ? '-translate-y-[50%] lg:-translate-y-[100%]' : ''} text-xl md:text-2xl example-item-title  ${index === 0 && 'animate-typing inline-block justify-between overflow-hidden whitespace-nowrap mx-auto'}`} key={animKey} style={{
+            "--animation-duration": "1.5s",
+                "--animation-steps": "32",
+                "--animation-delay": "0s",
+                "--from-ch": "0ch",
+                "--to-ch": "14ch",
+          }}>
+            <span className={` ${index === 2 && 'text-md bg-gradient-to-r from-red-500 to-purple-500 bg-clip-text text-transparent'}}`}>{item.title}</span>
+          </h1>
+          <div className={`${index === currentAnimation && !areCardsStacked ? 'opacity-1 translate-y-[0%] ' : 'opacity-0 translate-y-[20px]'} transition-all duration-300 example-item-description`}>
+          <span className={`${index === 2 && 'bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent'}`}>{item.description}</span>
           </div>
 
-          <div className="pt-5 pb-2 grid grid-cols-1 md:grid-cols-2 w-[90%] mx-auto gap-3 lg:gap-4 ">
-            <div className="p-6 md:p-12 lg:p-14 relative group bg-card flex flex-col pointer-events-auto  rounded-md transition-all duration-300  cursor-pointer justify-center items-center" onClick={() => nav("/typewriter")}>
-              <div className={`flex items-center justify-center absolute group-hover:top-6  transition-all duration-300 ease-in-out top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] ${typewriterExpanded && "top-4 md:top-6"}`}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                </svg>
-                <span
-                  className="ml-2 font-bold  animate-typing whitespace-nowrap w-fit overflow-hidden text-sm md:text-lg lg:text-xl"
-                  key={animKey}
-                  style={{
-                    "--animation-duration": "2s",
-                    "--animation-steps": "64",
-                    "--animation-delay": "0s",
-                    "--from-ch": "0ch",
-                    "--to-ch": "15ch",
-                  }}
-                >
-                  Typewriter Effect
-                </span>
-              </div>
-              <div className={`w-full opacity-0 transition-all duration-300 ease group-hover:opacity-100 group-hover:translate-y-[0%] ${typewriterExpanded ? "opacity-100 translate-y-[0%]" : "opacity-0 translate-y-[100%]"}`}>
-                <span className="text-gray-300 font-sans">
-                  Learn how to create a <span>Typewriting</span> effect without JavaScript in just <span className="text-red-500 font-bold">2 minutes.</span>
-                </span>
-              </div>
-            </div>
-
-            <div className="p-6 md:p-12 lg:p-14 relative group bg-card flex flex-col rounded-md transition-all duration-300  cursor-pointer justify-center items-center pointer-events-auto" onClick={() => nav("/gradient-borders")}>
-              <div className="bg-[conic-gradient(teal,blue,purple,teal)] absolute inset-0 rounded-md -m-1 -z-10 blur-sm" />
-              <div className="flex items-center justify-center absolute group-hover:top-6 transition-all duration-300 ease-in-out top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%]">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                </svg>
-                <span className="ml-2 font-bold  animate-typing whitespace-nowrap w-fit overflow-hidden text-base md:text-lg lg:text-xl">Gradient Borders</span>
-              </div>
-              <div className="w-full opacity-0 transition-all duration-300 ease group-hover:opacity-100 group-hover:translate-y-[0%]">
-                <span className="text-gray-300 font-sans">
-                  Creating gradient borders has never been so easy. Create one in just <span className="text-red-500 font-bold">1 line of code.</span>
-                </span>
-              </div>
-            </div>
-
-            <div className="-events-auto p-6 md:p-12 lg:p-14 relative group bg-card flex flex-col  rounded-md transition-all duration-300  cursor-pointer justify-center items-center" onClick={() => nav("/gradient-text")}>
-              <div className="flex items-center justify-center absolute group-hover:top-6 transition-all duration-300 ease-in-out top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%]">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                </svg>
-                <span
-                  className="ml-2 font-bold  animate-typing whitespace-nowrap w-fit overflow-hidden text-base md:text-lg lg:text-xl bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 text-transparent"
-                  style={{
-                    "--animation-duration": "2s",
-                    "--animation-steps": "64",
-                    "--animation-delay": "0s",
-                  }}
-                >
-                  Gradient Text
-                </span>
-              </div>
-              <div className="w-full opacity-0 transition-all duration-300 ease group-hover:opacity-100 md:translate-y-[50%] lg:translate-y-[100%] group-hover:translate-y-[0%]">
-                <span className="text-transparent bg-gradient-to-r from-purple-500 to-red-500 bg-clip-text">
-                  Creating gradient texts has never been so easy. Create one in just <span className="text-red-500 font-bold">1 line of code.</span>
-                </span>
-              </div>
-            </div>
-            <div className="pointer-events-auto p-6 md:p-12 lg:p-14 relative group bg-card flex flex-col  rounded-md transition-all duration-300  cursor-pointer justify-center items-center" onClick={() => nav("/typewriter")}>
-              <div className="flex items-center justify-center absolute group-hover:top-6 transition-all duration-300 ease-in-out top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%]">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                </svg>
-                <span
-                  className="ml-2 font-bold  animate-typing whitespace-nowrap w-fit overflow-hidden text-base md:text-lg lg:text-xl"
-                  style={{
-                    "--animation-duration": "2s",
-                    "--animation-steps": "64",
-                    "--animation-delay": "0s",
-                  }}
-                >
-                  Parallax Scrolling
-                </span>
-              </div>
-              <div className="w-full opacity-0 transition-all duration-300 ease group-hover:opacity-100 md:translate-y-[50%] lg:translate-y-[100%] group-hover:translate-y-[0%]">
-                <span>Learn how to create the Parallax scrolling effect.</span>
-              </div>
-            </div>
-          </div>
-          <div className="p-1 max-w-[90%] mx-auto  w-full  mt-auto mb-4 ">
-            <Contact />
-          </div>
         </div>
-      </div>
-    </>
-  );
+        
+      )
+    });
+  }
+  return (
+    <div className=" min-h-screen w-full flex flex-col  " id="homepage-container">
+        <div className="text-white text-md md:text-lg lg:text-xl mx-auto flex flex-col justify-center items-center text-center pt-4">
+          <h1>AnimLib | Animations | Designs</h1>
+          <span>Learn the most common CSS animations, designs and practices in <span className="text-green-500">one place.</span></span>
+       </div>
+    
+      <div className={`${areCardsStacked ? 'flex  h-screen' : '  max-w-[90%] grid grid-cols-1 md:grid-cols-2 gap-4 h-max'} w-full max-w-[100%] md:max-w-[90%]  mx-auto pt-12 `}>
+        {renderItems()}
+       </div>
+       <div className=" w-[90%] mx-auto mt-auto mb-4">
+        <Contact />
+       </div>
+
+    </div>
+  )
 }
