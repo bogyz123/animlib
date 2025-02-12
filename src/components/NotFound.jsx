@@ -5,19 +5,18 @@ export default function NotFound() {
   const nav = useNavigate();
   return (
     <div>
-      <div style={{ backgroundImage: `url(${notfoundBg})` }} className="h-screen w-full bg-cover bg-no-repeat bg-center flex flex-col">
-        <div className="text-white pt-5 text-center ">
-          <h1 className="text-lg md:text-xl">
-            <span className="text-red-500 text-6xl">404 </span>
-            Not Found
+      <div style={{ backgroundImage: `url(${notfoundBg})` }} className="h-screen w-full bg-cover bg-no-repeat bg-center flex flex-col items-center justify-center">
+        <div className="text-white text-center p-5">
+          <h1 className="text-4xl md:text-6xl font-bold">
+            <span className="text-red-500">404</span> Not Found
           </h1>
+          <p className="mt-3 text-xl md:text-2xl font-light">
+            The page you're looking for doesn't exist.
+          </p>
         </div>
-        <div className="mt-auto text-white  mb-5 text-center flex flex-col font-inter text-lg md:text-2xl">
-          <span className="bg-gradient-to-b from-gray-500  to-yellow-600 bg-clip-text text-transparent">The page you're looking for doesn't exist.</span>
-          <span className="bg-gradient-to-b from-gray-500  to-yellow-600 bg-clip-text text-transparent cursor-pointer select-none hover:from-gray-600 hover:to-yellow-700" onClick={() => nav("/")}>
-            Home
-          </span>
-        </div>
+        <button onClick={() => nav("/")} className="mt-5 bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow hover:bg-gray-100">
+          Go Home
+        </button>
       </div>
     </div>
   );

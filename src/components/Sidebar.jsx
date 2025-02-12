@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router";
 import "../index.css";
 
@@ -9,21 +9,17 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
   const [visibleItems, setVisibleItems] = useState([]);
 
   const items = useMemo(() => {
-    // here whenever the user searches for something, we try to find it and return the object holding the search query, it's memoized for performance
     const searchQuery = search.toLowerCase();
     return Object.values(sidebarState.animations.items).filter((item) => item.text.toLowerCase().includes(searchQuery));
-  }, [search]);
+  }, [search, sidebarState.animations.items]);
 
   const addItem = (item) => {
-    if (visibleItems.includes(item)) {
-      setVisibleItems(visibleItems.filter((item) => item !== item));
-    } else {
-      setVisibleItems([...visibleItems, item]);
-    }
+    setVisibleItems((prev) => 
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+    );
   };
 
   useEffect(() => {
-    // whenever search changes,
     setFilteredItems({ ...items });
     if (!sidebarState.animations.visible && items.length > 0) {
       setSidebarState((prev) => ({
@@ -34,41 +30,47 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
         },
       }));
     }
-  }, [search]);
-  
+  }, [search, items, setSidebarState, sidebarState.animations.visible]);
+
   const renderItems = (items) => {
     return Object.keys(items).map((key) => {
       const item = items[key];
       return (
         <div key={key} className="p-1">
-          <div className="cursor-pointer hover:text-gray-300  flex  justify-between items-center">
-            <Link to={item.url}>{item.text}</Link>
-            <span className="text-xl">
-              {item.children && (
-                <span className="text-xl" onClick={() => addItem(item.url)}>
-                  +
-                </span>
-              )}
-            </span>
+          <div className="cursor-pointer hover:text-gray-300 flex justify-between items-center">
+            <Link to={item.url} aria-label={`Navigate to ${item.text}`}>{item.text}</Link>
+            {item.children && (
+              <span className="text-xl" onClick={() => addItem(item.url)} aria-label={`Toggle ${item.text} children`}>
+                {visibleItems.includes(item.url) ? '-' : '+'}
+              </span>
+            )}
           </div>
-
-          {item.children && visibleItems.includes(item.url) && <div className="flex-col pl-2 flex">{renderItems(item.children)}</div>}
+          {item.children && visibleItems.includes(item.url) && (
+            <div className="flex-col pl-2 flex">{renderItems(item.children)}</div>
+          )}
         </div>
       );
     });
   };
 
   return (
-    <>
-      <div className={`z-50 transition-all duration-300 ease-in-out p-4 lg:p-6 inset-0 border-r fixed border-gray-700  text-white h-full flex flex-col bg-dark text-sm md:text-base w-fit ${sidebarState.expanded ? "transform translate-x-[0%] " : " transform -translate-x-[100%]"}`}>
+    <React.Fragment>
+      <div className={`z-50 transition-all duration-300 ease-in-out p-4 lg:p-6 inset-0 border-r fixed border-gray-700 text-white h-full flex flex-col bg-dark text-sm md:text-base w-fit ${sidebarState.expanded ? "transform translate-x-[0%]" : "transform -translate-x-[100%]"}`}>
         <div className="font-bold mb-2 cursor-pointer" onClick={() => nav("/")}>
           AnimLib
         </div>
         <div className="relative">
           {search && <span className="absolute right-0 -top-5 text-xs">{Object.keys(filteredItems).length} Results</span>}
-          <input type="text" className="rounded-xl text-white px-4 py-1.5 bg-inherit border text-sm" placeholder="Search docs..." maxLength={20} value={search} onChange={(e) => setSearch(e.currentTarget.value)} />
-
-          <div className=" w-fit absolute right-1 top-[5px]">
+          <input 
+            type="text" 
+            className="rounded-xl text-white px-4 py-1.5 bg-inherit border text-sm" 
+            placeholder="Search docs..." 
+            maxLength={20} 
+            value={search} 
+            onChange={(e) => setSearch(e.currentTarget.value)} 
+            aria-label="Search documentation"
+          />
+          <div className="w-fit absolute right-1 top-[5px]">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1" stroke="currentColor" className="size-5 md:size-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
@@ -77,10 +79,10 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
         <p className="py-3">Documentation</p>
         <div className="w-full bg-gray-600 h-0.5 mb-5"></div>
         <div className="flex-grow overflow-y-auto flex flex-col justify-between">
-          <ul className=" flex flex-col gap-y-2 select-none  ">
+          <ul className="flex flex-col gap-y-2 select-none">
             <li className="flex flex-col justify-between">
               <div
-                className="flex justify-between cursor-pointer  "
+                className="flex justify-between cursor-pointer"
                 onClick={() =>
                   setSidebarState((prev) => ({
                     ...prev,
@@ -97,27 +99,27 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
                 </svg>
               </div>
 
-              <div className={`my-2 p-2 border-card  rounded-md w-full  border  ${sidebarState.animations.visible ? "visible block " : "hidden"}`}>
+              <div className={`my-2 p-2 border-card rounded-md w-full border ${sidebarState.animations.visible ? "visible block" : "hidden"}`}>
                 <ul className="text-xs md:text-sm">{renderItems(filteredItems)}</ul>
               </div>
             </li>
           </ul>
           <div className="bg-purple-500 text-center rounded-md p-1 md:p-2 cursor-pointer hover:bg-purple-600">Contact Me</div>
-          <div className={`absolute  md:h-[20%] h-[10%]  top-1/2 translate-y-[-50%]  flex items-center justify-center right-0 cursor-pointer  border-gray-700   ${sidebarState.expanded && "visible"}`} onClick={expandSidebar}>
+          <div className={`absolute md:h-[20%] h-[10%] top-1/2 translate-y-[-50%] flex items-center justify-center right-0 cursor-pointer border-gray-700 ${sidebarState.expanded && "visible"}`} onClick={expandSidebar}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
             </svg>
           </div>
         </div>
       </div>
-      <div className="fixed top-1/2 left-0  z-50">
-        <div className={`top-1/2 right-4 cursor-pointer ${sidebarState.expanded ? "hidden" : "visible"}   px-2 md:pl-4 w-fit h-[70%] flex  items-center my-auto`} onClick={expandSidebar}>
+      <div className="fixed top-1/2 left-0 z-50">
+        <div className={`top-1/2 right-4 cursor-pointer ${sidebarState.expanded ? "hidden" : "visible"} px-2 md:pl-4 w-fit h-[70%] flex items-center my-auto`} onClick={expandSidebar}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
           </svg>
         </div>
       </div>
       <Outlet />
-    </>
+    </React.Fragment>
   );
 }

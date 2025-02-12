@@ -6,37 +6,38 @@ import Document from "../Document";
 import useTooltip from "../hooks/useTooltip";
 
 export default function Parallax() {
-  const [scrollY, setScrollY] = useState(null);
-  const [bg, setBg] = useState(null);
-  const fullImg = sessionStorage.getItem("fullImage");
-
+  const [scrollY, setScrollY] = useState(0);
+  const [bg, setBg] = useState(full); 
   const tooltipClick = useTooltip();
+
   useEffect(() => {
     const scrollHandler = () => {
       setScrollY(window.scrollY);
     };
+
     window.addEventListener("scroll", scrollHandler);
+
+
+    const fullImg = sessionStorage.getItem("fullImage");
     if (!fullImg) {
       sessionStorage.setItem("fullImage", full);
-      setBg(full);
     }
-    else {
-      setBg(full);
-    }
+
     return () => {
       window.removeEventListener("scroll", scrollHandler);
     };
   }, []);
+
   return (
     <Document>
       <div className="h-screen p-2 relative flex flex-col justify-center items-center">
         <div className="bg-cover h-screen absolute inset-0 z-0 bg-fixed" style={{ backgroundImage: `url(${bg})` }} />
         <div className="bg-cover h-screen absolute inset-0 z-20 bg-center" style={{ backgroundImage: `url(${bottom})` }} />
         <span
-          className={`z-10 text-3xl  md:text-6xl lg:7xl text-white  font-extrabold animate-fromLeft`}
+          className="z-10 text-3xl md:text-6xl lg:text-7xl text-white font-extrabold"
           style={{
             transform: `translateY(${scrollY * 0.4}px)`,
-            textShadow: `-2px -2px 0px rgba(0, 0, 0, 0.8), 10px -1px 0px rgba(0, 0, 0, 0.8), -2px 2px 0px rgba(0, 0, 0, 0.8), 10px 1px 0px rgba(0, 0, 0, 0.8)`,
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",
           }}
         >
           PARALLAX EFFECT
@@ -47,16 +48,16 @@ export default function Parallax() {
         <span>Parallax is a visual effect where the background content (an image) is moved at a different speed than the foreground content while scrolling.</span>
         <Document.Subheader>When to use Parallax?</Document.Subheader>
         <div className="pl-0.5">
-          <span>Websites that include Parallax effect are often:</span>
+          <span>Websites that include Parallax effect are often used in:</span>
           <ul>
-            <li>Blogs</li>
+            <li>Portfolio sites</li>
             <li>Story-telling websites</li>
-            <li>Blogs</li>
-            <li>Blogs</li>
+            <li>Product showcases</li>
+            <li>Landing pages</li>
           </ul>
         </div>
 
-        <Document.Header>Creating a simple Parallax Effect</Document.Header>
+        <Document.Header>Creating a Simple Parallax Effect</Document.Header>
         <div>1. Create a containing element and set a background image you want.</div>
         <div>2. Create a foreground element inside of it that contains some content.</div>
         <div className="w-fit">
@@ -89,7 +90,7 @@ export default function Parallax() {
             In the example above, we've set <span className="highlighted">background-attachment: fixed</span> property to the container.
           </p>
 
-          <div>While scrolling, the image stays fixed, and the foreground moves, making a Parallax Effect.</div>
+          <div>While scrolling, the image stays fixed, and the foreground moves, creating a Parallax Effect.</div>
           <Document.Separator width={"w-full"} />
         </div>
       </Document.Content>
