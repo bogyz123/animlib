@@ -5,7 +5,6 @@ import useTooltip from "../hooks/useTooltip";
 
 export default function Typewriter() {
   const [animKey, setAnimKey] = useState(0);
-  const onTooltipClick = useTooltip();
 
   return (
     <Document>

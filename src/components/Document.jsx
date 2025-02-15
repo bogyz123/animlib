@@ -5,15 +5,15 @@ Document.Title = function Title({ children }) {
   return <div className="uppercase text-center text-xl md:text-2xl underline underline-offset-2 mt-2 md:mt-4 font-extrabold mx-auto w-fit sans animated-fromLeft">{children}</div>;
 };
 Document.Content = function Content({ children }) {
-  return <div className=" text-gray-300 z-20   py-4  pl-6 md:pl-8  pr-4 flex flex-col  tracking-wide text-md md:text-lg document-content ml-6 ">{children}</div>;
+  return <div className=" text-gray-300 z-20   py-4  pl-6 md:pl-8  pr-4 flex flex-col  tracking-wide text-md md:text-lg document-content ml-2 md:ml-4 xl:ml-6 ">{children}</div>;
 };
 Document.Explanation = function Explanation({children}) {
-  return <div className="document-explanation sans tracking-wide text-gray-300 ml-4 px-8 py-2 md:px-12 md:py-4 w-fit  lg:max-w-[60%]">{children}</div>
+  return <div className="document-explanation sans tracking-wide text-gray-300  px-8 py-2 md:px-12 md:py-4 w-fit lg:max-w-[60%] ml-2 md:ml-4 xl:ml-6">{children}</div>
 }
-Document.Header = function Header({ children }) {
+Document.Header = function Header({ children, classes }) {
   return (
     <h1
-      className="text-white text-base md:text-xl my-2 lg:text-xl select-none font-extrabold inline-block justify-between animate-typing overflow-hidden whitespace-nowrap"
+      className={`text-white text-base md:text-xl my-2 lg:text-xl select-none font-extrabold inline-block justify-between animate-typing overflow-hidden whitespace-nowrap ${classes && classes.join("")}`}
       style={{
         "--animation-duration": `${Math.max(1, children.length * 0.05)}s`,
         "--animation-steps": "32",

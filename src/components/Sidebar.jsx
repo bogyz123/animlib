@@ -30,23 +30,23 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
         },
       }));
     }
-  }, [search, items, setSidebarState, sidebarState.animations.visible]);
+  }, [search]);
 
   const renderItems = (items) => {
     return Object.keys(items).map((key) => {
       const item = items[key];
       return (
         <div key={key} className="p-1">
-          <div className="cursor-pointer hover:text-gray-300 flex justify-between items-center">
+          <div onClick={() => addItem(item.url)} className="cursor-pointer hover:text-gray-300 flex justify-between items-center">
             <Link to={item.url} aria-label={`Navigate to ${item.text}`}>{item.text}</Link>
             {item.children && (
-              <span className="text-xl" onClick={() => addItem(item.url)} aria-label={`Toggle ${item.text} children`}>
+              <span className="text-xl"  aria-label={`Toggle ${item.text} children`}>
                 {visibleItems.includes(item.url) ? '-' : '+'}
               </span>
             )}
           </div>
           {item.children && visibleItems.includes(item.url) && (
-            <div className="flex-col pl-2 flex">{renderItems(item.children)}</div>
+            <div className="flex-col pl-2 flex ">{renderItems(item.children)}</div>
           )}
         </div>
       );
@@ -77,12 +77,12 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
           </div>
         </div>
         <p className="py-3">Documentation</p>
-        <div className="w-full bg-gray-600 h-0.5 mb-5"></div>
+        <div className="w-full bg-gray-600 h-0.5 mb-5" />
         <div className="flex-grow overflow-y-auto flex flex-col justify-between">
           <ul className="flex flex-col gap-y-2 select-none">
             <li className="flex flex-col justify-between">
               <div
-                className="flex justify-between cursor-pointer"
+                className="flex justify-between cursor-pointer "
                 onClick={() =>
                   setSidebarState((prev) => ({
                     ...prev,

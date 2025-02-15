@@ -1,16 +1,20 @@
 import { memo, useState, useEffect } from "react";
 
-const CodeSample = memo(function CodeSample({ fontSize, pages, language }) {
+const CodeSample = memo(function CodeSample({ fontSize, pages, language, pageIndexToShow }) {
   const [copied, setCopied] = useState(false);
-  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const [currentPageIndex, setCurrentPageIndex] = useState(pageIndexToShow || 0);
+
+ useEffect(() => {
+  setCurrentPageIndex(pageIndexToShow || 0);
+}, [pageIndexToShow]);
 
   useEffect(() => {
-
     if (copied) {
       const timer = setTimeout(() => setCopied(false), 2000);
       return () => clearTimeout(timer);
     }
   }, [copied]);
+ 
 
   const next = () => {
     if (currentPageIndex < pages.length - 1) {
@@ -30,7 +34,7 @@ const CodeSample = memo(function CodeSample({ fontSize, pages, language }) {
   };
 
   return (
-    <>
+    <div>
       <div className={`w-full flex bg-card rounded-md rounded-b-none justify-end translate-y-1 p-2`}>
         <div className={`absolute top-0 md:top-1 left-1/2 -translate-x-[50%] text-sm`} style={{ color: language?.[currentPageIndex] === "JavaScript" ? "orange" : "crimson" }}>
           {language?.[currentPageIndex]}
@@ -42,25 +46,46 @@ const CodeSample = memo(function CodeSample({ fontSize, pages, language }) {
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
         </svg>
       </div>
-      <div className={`max-h-[250px] scrollbars bg-card relative p-4 md:p-6 lg:p-7 rounded-md whitespace-pre-wrap max-w-[750px] font-mono overflow-x-auto text-${fontSize} transition-all duration-500 ease-in-out transform`}>
+      <div className={`max-h-[250px] scrollbars bg-card relative p-4 md:p-6 lg:p-7 rounded-md whitespace-pre-wrap max-w-[1150px] font-mono overflow-x-auto text-${fontSize} `}>
+        <div className="animate-scale transition-transform duration-500 ease-in-out">
         <code key={currentPageIndex}>
           {pages && pages[currentPageIndex]}
         </code>
+        </div>
       </div>
-      <div className={`bg-card flex justify-between items-center rounded-md rounded-t-none -translate-y-1 p-2`}>
-        {pages && pages.length > 1 && (
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 cursor-pointer" onClick={prev}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
-          </svg>
-        )}
-        <span className="text-sm">{pages && `${currentPageIndex + 1}/${pages.length}`}</span>
-        {pages && pages.length > 1 && (
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 cursor-pointer" onClick={next}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-          </svg>
-        )}
+      <div className={`bg-card flex justify-between items-center rounded-md rounded-t-none -translate-y-1 p-2 `}>
+       {pages && pages.length > 1 && (
+  <div className="bg-card flex justify-between items-center rounded-md rounded-t-none -translate-y-1 p-2  ml-auto">
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      fill="none" 
+      viewBox="0 0 24 24" 
+      strokeWidth="1.5" 
+      stroke="currentColor" 
+      className="size-6 cursor-pointer" 
+      onClick={prev}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
+    </svg>
+    
+    <span className="text-sm">{`${currentPageIndex + 1}/${pages.length}`}</span>
+    
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      fill="none" 
+      viewBox="0 0 24 24" 
+      strokeWidth="1.5" 
+      stroke="currentColor" 
+      className="size-6 cursor-pointer" 
+      onClick={next}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+    </svg>
+  </div>
+)}
+
       </div>
-    </>
+    </div>
   );
 });
 export default CodeSample;
