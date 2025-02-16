@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router";
 import "../index.css";
 
@@ -7,6 +7,7 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
   const [search, setSearch] = useState("");
   const [filteredItems, setFilteredItems] = useState({ ...sidebarState.animations.items });
   const [visibleItems, setVisibleItems] = useState([]);
+  const sidebarRef = useRef();
 
   const items = useMemo(() => {
     const searchQuery = search.toLowerCase();
@@ -18,6 +19,28 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
       prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
     );
   };
+  useEffect(() => {
+    const handleClick = (e) => {
+      // Checks if we clicked outside of the sidebar (to close it)
+      const clickCoords = {x: e.clientX, y: e.clientY};
+      const rect = sidebarRef.current?.getBoundingClientRect();
+      if (clickCoords.x > rect.width) {
+        setSidebarState((prev) => ({
+          ...prev, 
+          expanded: false,
+        }));
+      }
+ }
+   if (sidebarState.expanded) {
+    window.addEventListener("click", handleClick);
+   }
+   else {
+    window.removeEventListener("click", handleClick);
+   }
+   return () => {
+    window.removeEventListener("click", handleClick);
+   }
+  }, [sidebarState.expanded]);
 
   useEffect(() => {
     setFilteredItems({ ...items });
@@ -54,8 +77,8 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
   };
 
   return (
-    <React.Fragment>
-      <div className={`z-50 transition-all duration-300 ease-in-out p-4 lg:p-6 inset-0 border-r fixed border-gray-700 text-white h-full flex flex-col bg-dark text-sm md:text-base w-fit ${sidebarState.expanded ? "transform translate-x-[0%]" : "transform -translate-x-[100%]"}`}>
+    <div>
+      <div ref={sidebarRef} className={`z-50 transition-all duration-300 ease-in-out p-4 lg:p-6 inset-0 border-r fixed border-gray-700 text-white h-full flex flex-col bg-dark text-sm md:text-base w-fit ${sidebarState.expanded ? "transform translate-x-[0%]" : "transform -translate-x-[100%]"}`}>
         <div className="font-bold mb-2 cursor-pointer" onClick={() => nav("/")}>
           AnimLib
         </div>
@@ -120,6 +143,6 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
         </div>
       </div>
       <Outlet />
-    </React.Fragment>
+    </div>
   );
 }

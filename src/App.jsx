@@ -63,9 +63,6 @@ function App() {
     },
   });
 
-  useEffect(() => {
-    console.log(sidebarState);
-  }, [sidebarState]);
 
   const expandSidebar = useCallback(() => {
     setSidebarState((prev) => ({
