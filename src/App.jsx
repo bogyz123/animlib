@@ -107,11 +107,13 @@ function App() {
         {routes.map((route) => {
           return (
             <>
-              <Route key={route.path} path={route.path} element={route.component} />
+              <Route key={route.path} path={route.path} element={route.component}>
               {route.children &&
                 route.children.map((child, index) => (
                   <Route key={index} path={child.path} element={child.component} />
                 ))}
+              </Route>
+             
             </>
           );
         })}
