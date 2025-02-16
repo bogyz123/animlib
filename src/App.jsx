@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { BrowserRouter, HashRouter, Route, Routes } from "react-router";
+import { HashRouter, Route, Routes } from "react-router";
 import GradientBorders from "./components/docs/GradientBorders";
 import GradientText from "./components/docs/GradientText";
 import Parallax from "./components/docs/Parallax";
@@ -9,11 +9,11 @@ import Scrolling, { AnimationTimeline, IntersectionObserverAPI } from "./compone
 import { SlideIn } from "./components/docs/scrolling/SlideIn";
 import Typewriter from "./components/docs/Typewriter";
 import Homepage from "./components/Homepage";
-import NotFound from "./components/NotFound";
-import Sidebar from "./components/Sidebar";
-import ScrollingText from "./components/ScrollingText";
-import "./index.css";
 import Navigation from "./components/Navigation";
+import NotFound from "./components/NotFound";
+import ScrollingText from "./components/ScrollingText";
+import Sidebar from "./components/Sidebar";
+import "./index.css";
 
 function App() {
   const [sidebarState, setSidebarState] = useState({
@@ -55,14 +55,18 @@ function App() {
             },
             slideIn: {
               url: "/scrolling/slide-in",
-              text: "Slide In"
-            }
+              text: "Slide In",
+            },
           },
         },
       },
     },
   });
-  useEffect(() => {console.log(sidebarState)}, [sidebarState]);
+
+  useEffect(() => {
+    console.log(sidebarState);
+  }, [sidebarState]);
+
   const expandSidebar = useCallback(() => {
     setSidebarState((prev) => ({
       ...prev,
@@ -70,29 +74,48 @@ function App() {
     }));
   }, []);
 
+  const routes = [
+    { path: "/", component: <Homepage /> },
+    { path: "/typewriter", component: <Typewriter /> },
+    { path: "/gradient-borders", component: <GradientBorders /> },
+    { path: "/gradient-text", component: <GradientText /> },
+    { path: "/parallax", component: <Parallax /> },
+    { path: "/scrolling-text", component: <ScrollingText /> },
+    {
+      path: "/scrolling",
+      component: <Scrolling />,
+      children: [
+        { path: "/scrolling/fade-in", component: <FadeIn /> },
+        { path: "/scrolling/blur", component: <Blur /> },
+        { path: "/scrolling/animationtimeline", component: <AnimationTimeline /> },
+        { path: "/scrolling/intersectionobserver", component: <IntersectionObserverAPI /> },
+        { path: "/scrolling/slide-in", component: <SlideIn /> },
+        { path: "*", component: <NotFound /> },
+      ],
+    },
+  ];
+
   return (
     <HashRouter>
       <Navigation />
+      <Sidebar
+        sidebarState={sidebarState}
+        expandSidebar={expandSidebar}
+        setSidebarState={setSidebarState}
+      />
       <Routes>
-        <Route element={<Sidebar sidebarState={sidebarState} expandSidebar={expandSidebar} setSidebarState={setSidebarState} />} path="/">
-          <Route path="/typewriter" element={<Typewriter />} />
-          <Route index element={<Homepage />} />
-          <Route path="gradient-borders" element={<GradientBorders />} />
-          <Route path="gradient-text" element={<GradientText />} />
-          <Route path="parallax" element={<Parallax />} />
-          <Route path="*" element={<NotFound sidebarState={sidebarState} expandSidebar={expandSidebar} setSidebarState={setSidebarState} />} />
-          <Route path="scrolling-text" element={<ScrollingText />}/>
-          <Route path="scrolling" element={<Scrolling />}>
-            <Route path="fade-in" element={<FadeIn />} />
-            <Route path="blur" element={<Blur />} />
-            <Route path="animationtimeline" element={<AnimationTimeline />} />
-            <Route path="intersectionobserver" element={<IntersectionObserverAPI />} />
-            <Route path="slide-in" element={<SlideIn />}/>
-     
-          </Route>
-        </Route>
+        {routes.map((route) => {
+          return (
+            <>
+              <Route key={route.path} path={route.path} element={route.component} />
+              {route.children &&
+                route.children.map((child, index) => (
+                  <Route key={index} path={child.path} element={child.component} />
+                ))}
+            </>
+          );
+        })}
       </Routes>
-     
     </HashRouter>
   );
 }
