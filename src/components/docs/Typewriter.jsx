@@ -57,7 +57,7 @@ export default function Typewriter() {
           </div>
 
           <span className="text-start text-sm">Here is the final result.</span>
-          <div className="animate-typing py-2 bg-card rounded-md flex justify-between select-none">
+          <div className=" py-2 bg-card rounded-md flex justify-between select-none ">
             <span
               key={animKey}
               style={{

@@ -15,7 +15,7 @@ export default function Homepage() {
       url: '/typewriter'
     }, {
       title: 'Gradient Borders',
-      description: 'Creating gradient borders has never been so easy. Create one in just ',
+      description: 'Creating gradient borders has never been so easy. Create one in just 2 minutes. ',
       url: '/gradient-borders'
     }, {
       title: 'Gradient Text',
@@ -51,13 +51,12 @@ export default function Homepage() {
   const navigateTo = (url) => {
     if (!areCardsStacked) {
       nav(url);
-    } else {
+    }
+     else {
       const cards = document.querySelectorAll(".example-item");
       cards.forEach(card => {
-
-  
         card.style.transform = `translateX(0px) translateY(0) skew(0) rotate(0)`;
-        card.style.transition = 'transform 0.5s ease-out'; 
+        card.style.transition = 'transform 0.5s ease-out';
         card.style.filter = "blur(0)";
         card.style.position = "static";
         card.style.opacity = "1";
@@ -92,9 +91,9 @@ export default function Homepage() {
 
   return (
     <div className="min-h-screen w-full flex flex-col" id="homepage-container">
-      <div className="text-white text-md md:text-lg lg:text-xl mx-auto flex flex-col justify-center items-center text-center pt-4">
+      <div className="text-white text-md md:text-lg lg:text-xl mx-auto flex flex-col justify-center items-center text-center pt-4 px-2">
         <h1>AnimLib | Animations | Designs</h1>
-        <span>Learn the most common CSS animations, designs and practices in <span className="text-green-500">one place.</span></span>
+        <span>Learn the most common CSS animations, designs and practices in <span className="text-green-500  bg-none border-none outline-none" style={{boxShadow:'1px 1px green'}}>one place.</span></span>
       </div>
       <div className={`${areCardsStacked ? 'flex h-screen' : 'max-w-[90%] grid grid-cols-1 md:grid-cols-2 gap-4 h-max'} w-full max-w-[100%] md:max-w-[90%] mx-auto pt-12`}>
         {renderItems()}

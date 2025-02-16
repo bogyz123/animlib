@@ -10,7 +10,7 @@ export default function GradientText() {
     <Document>
       <Document.Title>Gradient Text</Document.Title>
       <div className="w-full h-screen p-2 flex flex-col" onClick={(e) => handleTooltipClick(e)}>
-        <span className="mx-auto bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent text-2xl font-bold py-2">
+        <span className="mx-auto bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent text-2xl font-bold py-2 text-center">
           Just like with borders, creating gradient text requires creativity, since it cannot be done natively.
         </span>
         <Document.Content>

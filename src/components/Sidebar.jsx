@@ -100,7 +100,7 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
               </div>
 
               <div className={`my-2 p-2 border-card rounded-md w-full border ${sidebarState.animations.visible ? "visible block" : "hidden"}`}>
-                <ul className="text-xs md:text-sm">{renderItems(filteredItems)}</ul>
+                <ul className="text-sm md:text-base">{renderItems(filteredItems)}</ul>
               </div>
             </li>
           </ul>

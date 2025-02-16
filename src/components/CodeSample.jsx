@@ -34,7 +34,7 @@ const CodeSample = memo(function CodeSample({ fontSize, pages, language, pageInd
   };
 
   return (
-    <div>
+    <div className="max-w-[95%]">
       <div className={`w-full flex bg-card rounded-md rounded-b-none justify-end translate-y-1 p-2`}>
         <div className={`absolute top-0 md:top-1 left-1/2 -translate-x-[50%] text-sm`} style={{ color: language?.[currentPageIndex] === "JavaScript" ? "orange" : "crimson" }}>
           {language?.[currentPageIndex]}

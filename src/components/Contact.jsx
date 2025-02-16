@@ -8,11 +8,11 @@ export default function Contact() {
   });
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); 
     const hasEmptyFields = Object.values(formData).some((val) => val.trim() === "");
     if (!hasEmptyFields) {
       console.log("Sent! (dummy)");
-      setFormData({ name: "", subject: "", message: "" }); // Clear form after submission
+      setFormData({ name: "", subject: "", message: "" }); 
     } else {
       console.log("Input all the fields.");
     }

@@ -14,7 +14,7 @@ const useTooltip = () => {
       tooltips.forEach((tooltip) => tooltip.remove());
     }
     const tooltip = document.createElement("div");
-    tooltip.classList.add("bg-card", "fixed", "bottom-1", "left-1/2", "translate-x-[-50%]", "text-xs", "tooltip", "w-max", "p-2", "rounded-md");
+    tooltip.classList.add("bg-card", "fixed", "bottom-1", "left-1/2", "translate-x-[-50%]", "text-xs", "tooltip","mx-auto", "p-2", "rounded-md");
     tooltip.textContent = data[e.target.textContent].unsupportedBy != null ? data[e.target.textContent].explanation + ` (${data[e.target.textContent].unsupportedBy.join(", ")} do not support it.)` : data[e.target.textContent].explanation;
     tooltip.addEventListener("click", (e) => {
       e.target.remove();

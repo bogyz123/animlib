@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       animation: {
-        'scale': 'scale 0.5s ease-out forwards',
+        typing: "typing var(--animation-duration) var(--animation-delay) steps(var(--animation-steps), end) forwards",
       },
       colors: {
         dark: "rgb(16,12,36)",

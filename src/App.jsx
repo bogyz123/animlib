@@ -13,6 +13,7 @@ import NotFound from "./components/NotFound";
 import Sidebar from "./components/Sidebar";
 import ScrollingText from "./components/ScrollingText";
 import "./index.css";
+import Navigation from "./components/Navigation";
 
 function App() {
   const [sidebarState, setSidebarState] = useState({
@@ -71,6 +72,7 @@ function App() {
 
   return (
     <HashRouter>
+      <Navigation />
       <Routes>
         <Route element={<Sidebar sidebarState={sidebarState} expandSidebar={expandSidebar} setSidebarState={setSidebarState} />} path="/">
           <Route path="/typewriter" element={<Typewriter />} />
@@ -90,6 +92,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
+     
     </HashRouter>
   );
 }

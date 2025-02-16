@@ -19,6 +19,7 @@ export default function Parallax() {
 
 
     const fullImg = sessionStorage.getItem("fullImage");
+    console.log(fullImg);
     if (!fullImg) {
       sessionStorage.setItem("fullImage", full);
     }
