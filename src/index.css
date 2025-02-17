@@ -174,7 +174,13 @@ html {
   animation-range-end: 70%;
   animation-range-start: 20%;
 }
-
+.animate-typing {
+  animation: typing var(--animation-duration) var(--animation-delay) steps(var(--animation-steps), end) forwards;
+}
+@keyframes typing {
+  from { width: var(--from-ch) }
+  to { width: var(--to-ch) }
+}
 .animate-timelineZoom {
   animation: timelineZoom 1ms linear both;
   animation-timeline: scroll();

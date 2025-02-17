@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router";
 import "../index.css";
+import Contact from "./Contact";
+
 
 export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }) {
   const nav = useNavigate();
@@ -8,6 +10,8 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
   const [filteredItems, setFilteredItems] = useState({ ...sidebarState.animations.items });
   const [visibleItems, setVisibleItems] = useState([]);
   const sidebarRef = useRef();
+  const [isContactVisible, setIsContactVisible] = useState(false);
+ 
 
   const items = useMemo(() => {
     const searchQuery = search.toLowerCase();
@@ -19,28 +23,10 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
       prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
     );
   };
-  useEffect(() => {
-    const handleClick = (e) => {
-      // Checks if we clicked outside of the sidebar (to close it)
-      const clickCoords = {x: e.clientX, y: e.clientY};
-      const rect = sidebarRef.current?.getBoundingClientRect();
-      if (clickCoords.x > rect.width) {
-        setSidebarState((prev) => ({
-          ...prev, 
-          expanded: false,
-        }));
-      }
- }
-   if (sidebarState.expanded) {
-    window.addEventListener("click", handleClick);
-   }
-   else {
-    window.removeEventListener("click", handleClick);
-   }
-   return () => {
-    window.removeEventListener("click", handleClick);
-   }
-  }, [sidebarState.expanded]);
+  const toggleContact = () => {
+    setIsContactVisible(!isContactVisible);
+  }
+
 
   useEffect(() => {
     setFilteredItems({ ...items });
@@ -78,10 +64,13 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
 
   return (
     <div>
+      
       <div ref={sidebarRef} className={`z-50 transition-all duration-300 ease-in-out p-4 lg:p-6 inset-0 border-r fixed border-gray-700 text-white h-full flex flex-col bg-dark text-sm md:text-base w-fit ${sidebarState.expanded ? "transform translate-x-[0%]" : "transform -translate-x-[100%]"}`}>
         <div className="font-bold mb-2 cursor-pointer" onClick={() => nav("/")}>
           AnimLib
+          
         </div>
+      
         <div className="relative">
           {search && <span className="absolute right-0 -top-5 text-xs">{Object.keys(filteredItems).length} Results</span>}
           <input 
@@ -127,7 +116,7 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
               </div>
             </li>
           </ul>
-          <div className="bg-purple-500 text-center rounded-md p-1 md:p-2 cursor-pointer hover:bg-purple-600">Contact Me</div>
+          <div className="bg-purple-500 text-center rounded-md p-1 md:p-2 cursor-pointer hover:bg-purple-600" onClick={toggleContact}>Contact Me</div>
           <div className={`absolute md:h-[20%] h-[10%] top-1/2 translate-y-[-50%] flex items-center justify-center right-0 cursor-pointer border-gray-700 ${sidebarState.expanded && "visible"}`} onClick={expandSidebar}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
@@ -143,6 +132,21 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
         </div>
       </div>
       <Outlet />
+    
+      {isContactVisible && (
+  <div className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center z-50">
+    <div className="absolute top-4 right-4 cursor-pointer" onClick={toggleContact}>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-8">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+
+    </div>
+    <div className={`w-[80%] p-6 rounded-lg shadow-lg transition-transform duration-500 ease-out starting:-translate-x-[100vw]`}>
+      <Contact />
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

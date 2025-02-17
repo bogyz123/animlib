@@ -62,7 +62,7 @@ export default function Contact() {
         ></textarea>
         <button 
           type="submit" 
-          className="bg-purple-600 hover:bg-purple-700 p-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+          className="bg-purple-600 cursor-pointer hover:bg-purple-700 p-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
           aria-label="Send message"
         >
           Send

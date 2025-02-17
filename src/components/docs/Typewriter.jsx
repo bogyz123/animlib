@@ -11,11 +11,6 @@ export default function Typewriter() {
       <div className="px-6 md:px-16 lg:px-24">
         <Document.Title>The Typewriter Effect</Document.Title>
         <Document.Content>
-          <div className="my-2 flex flex-col gap-y-2">
-            <Document.Subheader>Animation Steps</Document.Subheader>
-            <span>This CSS property defines how many steps the animation will take to complete, respecting the duration.</span>
-            <span>These steps will help our Typewriting effect look more natural, rather than too smooth.</span>
-          </div>
 
           <Document.Subheader>Creating the Typewriting Effect</Document.Subheader>
           <span>We will define a simple h1 header text and style it accordingly.</span>
@@ -24,34 +19,46 @@ export default function Typewriter() {
             <li>The typewriting animation we defined will take 3.5s to complete with 40 steps during that time.</li>
             <li>The keyframes of the animation will expand the width of our text element to its end.</li>
           </ul>
+          <div className="my-2 flex flex-col gap-y-2">
+            <Document.Subheader>Animation Steps</Document.Subheader>
+            <span>This CSS property defines how many steps the animation will take to complete, respecting the duration.</span>
+            <span>These steps will help our Typewriting effect look more natural, rather than too smooth.</span>
+          </div>
 
           <div className="p-2 w-fit">
             <CodeSample
               language={["CSS", "CSS", "HTML"]}
               pages={[
                 `.typewriter h1 {
-                  overflow: hidden; 
-                  white-space: nowrap; 
-                  margin: 0 auto; 
-                  letter-spacing: 0.15em; 
-                  animation: typing 3.5s steps(40, end);
-                }`,
-                `@keyframes typing {
-                  from { width: 0; }
-                  to { width: 100%; }
-                }`,
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.15em;
+  animation: typing 3.5s steps(40, end);
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+`,
                 `<span
-                  key={animKey}
-                  style={{
-                    "--animation-duration": "2s",
-                    "--animation-steps": "32",
-                    "--animation-delay": "0s",
-                    "--from-ch": "0ch",
-                    "--to-ch": "30ch",
-                  }}
-                >
-                  The result of the Typewriter Effect
-                </span>`
+  key={animKey}
+  style={{
+    "--animation-duration": "2s",
+    "--animation-steps": "32",
+    "--animation-delay": "0s",
+    "--from-ch": "0ch",
+    "--to-ch": "30ch",
+  }}
+>
+  The result of the Typewriter Effect
+</span>
+`
               ]}
             />
           </div>

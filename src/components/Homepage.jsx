@@ -64,11 +64,7 @@ export default function Homepage() {
 
         
       });
-      setTimeout(() => {
-        cards.forEach(card => {
-          card.style.transform = "translateX(0) translateY(0) skew(0) rotate(0)";
-        });
-      }, 500); 
+ 
       setAreCardsStacked(false);
     }
   };

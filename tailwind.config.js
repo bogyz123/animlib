@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       animation: {
-        typing: "typing var(--animation-duration) var(--animation-delay) steps(var(--animation-steps), end) forwards",
+        'fromLeft': "fromLeft 1s ease-out forwards",
       },
       backgroundImage: {
         gradient: "linear-gradient(to right, red, blue, purple, red)",
@@ -15,14 +15,15 @@ export default {
         open: ["Open Sans", "sans-serif"],
       },
       keyframes: {
-        typing: {
-          from: { width: "var(--from-ch)" },
-          to: { width: "var(--to-ch)" },
-        },
         scale: {
           '0%': {transform:'scale(0.75)'},
           '100%': {transform: 'scale(1)'},
         },
+        fromLeft: {
+          to: {
+            transform: 'translateX(0)',
+          }
+        }
       },
     },
   },
