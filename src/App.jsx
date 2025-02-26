@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { HashRouter, Route, Routes } from "react-router";
+import ButtonsIndex from "./components/docs/buttons/ButtonsIndex";
 import GradientBorders from "./components/docs/GradientBorders";
 import GradientText from "./components/docs/GradientText";
 import Parallax from "./components/docs/Parallax";
@@ -21,26 +22,6 @@ function App() {
     animations: {
       visible: false,
       items: {
-        typewriter: {
-          url: "/typewriter",
-          text: "Typewriter",
-        },
-        gradientText: {
-          url: "gradient-text",
-          text: "Gradient Text",
-        },
-        gradientBorders: {
-          url: "gradient-borders",
-          text: "Gradient Borders",
-        },
-        parallax: {
-          url: "parallax",
-          text: "Parallax",
-        },
-        shinyText: {
-          url: "scrolling-text",
-          text: "Scrolling Text",
-        },
         scrolling: {
           url: "scrolling",
           text: "Scrolling",
@@ -57,8 +38,38 @@ function App() {
               url: "/scrolling/slide-in",
               text: "Slide In",
             },
+            shinyText: {
+              url: "scrolling-text",
+              text: "Scrolling Text",
+            },
           },
         },
+        gradient: {
+          url: "/",
+          text: "Gradients",
+          children: {
+            gradientText: {
+              url: "gradient-text",
+              text: "Gradient Text"
+            },
+            gradientBorders: {
+              url: "gradient-borders",
+              text: "Gradient Borders",
+            }
+          }
+        },
+        typewriter: {
+          url: "/typewriter",
+          text: "Typewriter",
+        },
+        parallax: {
+          url: "parallax",
+          text: "Parallax",
+        },
+        buttons: {
+          url: "/buttons",
+          text: "Buttons",
+        }
       },
     },
   });
@@ -73,6 +84,7 @@ function App() {
 
   const routes = [
     { path: "/", component: <Homepage /> },
+    {path: "/buttons", component: <ButtonsIndex />},
     { path: "/typewriter", component: <Typewriter /> },
     { path: "/gradient-borders", component: <GradientBorders /> },
     { path: "/gradient-text", component: <GradientText /> },
@@ -103,7 +115,7 @@ function App() {
       <Routes>
         {routes.map((route) => {
           return (
-            <>
+            
               <Route key={route.path} path={route.path} element={route.component}>
               {route.children &&
                 route.children.map((child, index) => (
@@ -111,7 +123,7 @@ function App() {
                 ))}
               </Route>
              
-            </>
+            
           );
         })}
       </Routes>

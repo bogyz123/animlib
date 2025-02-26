@@ -1,6 +1,7 @@
 import React from 'react'
 
 export const SlideIn = () => {
+  const classNames = "bg-card p-4 rounded-md animate-timelineInline";
   return (
     
    <>
@@ -60,40 +61,25 @@ export const SlideIn = () => {
     </div>
     </div>
     <div className="bg-inherit flex overflow-hidden p-4 gap-x-2  min-w-[225px] w-full md:w-[70%] md:mx-auto lg:w-1/2">
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline'>Lorem Ipsum</div>
+     {Array.from({length: 16}, (_, index) => index).map((i) => {
+      if (i % 2 === 0) {
+        return <div className={`${classNames} ml-1`}>Lorem</div>
+      }
+      else {
+        return <div className={classNames}>Ipsum</div>
+      }
+     })}
     </div>
     <div className="bg-inherit flex overflow-hidden p-4 gap-x-2  min-w-[225px] w-full md:w-[70%] md:mx-auto lg:w-1/2">
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem Ipsum</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem</div>
-      <div className='bg-card p-4 rounded-md animate-timelineInline' data-direction="right">Lorem Ipsum</div>
+
+      {Array.from({length: 16}, (_, index) => index).map((i) => {
+      if (i % 2 === 0) {
+        return <div className={classNames} data-direction="right">Lorem</div>
+      }
+      else {
+        return <div className={classNames} data-direction="right">Ipsum</div>
+      }
+     })}
     </div>
    </>
   )

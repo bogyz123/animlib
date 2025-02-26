@@ -132,9 +132,7 @@ html {
   transform: translateY(0);
 }
 
-.example-item:hover .example-item-title {
-  transform: translateY(-100%);
-}
+
 .example-item {
   top: 50%;
   left: 50%;
@@ -213,6 +211,41 @@ html {
   80%, 100% {
     opacity: 0;
     scale: 0 1;
+  }
+}
+.shine-element {
+  border: 1px solid rgb(60, 0, 128);
+  border-radius: 50px;
+  overflow: hidden;
+  position: relative;
+}
+.shine-element::before {
+  content: "";
+  background-image: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0) 70%
+  );
+  width: 50px;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: -100px;
+}
+.shine-element:hover::before {
+  animation: shine 1.5s infinite ease-out;
+
+}
+@keyframes shine {
+  0% {
+    left: -100px;
+  }
+  60% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
   }
 }
 

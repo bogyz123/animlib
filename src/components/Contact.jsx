@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export default function Contact() {
+ 
   const [formData, setFormData] = useState({
     name: "",
     subject: "",
@@ -11,7 +12,7 @@ export default function Contact() {
     e.preventDefault(); 
     const hasEmptyFields = Object.values(formData).some((val) => val.trim() === "");
     if (!hasEmptyFields) {
-      console.log("Sent! (dummy)");
+      console.log("Sent! (dummy)"); 
       setFormData({ name: "", subject: "", message: "" }); 
     } else {
       console.log("Input all the fields.");
@@ -25,6 +26,8 @@ export default function Contact() {
       [name]: value,
     }));
   };
+  
+  
 
   return (
     <div className="bg-card flex flex-col md:flex-row p-4 md:p-8 rounded-lg justify-between h-full text-white shadow-lg transform transition duration-500 ease-in-out hover:scale-105">

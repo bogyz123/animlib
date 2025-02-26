@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router";
 import "../index.css";
 import Contact from "./Contact";
+import useModalBounds from "./hooks/useModalBounds";
+import { useCallback } from "react";
 
 
 export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }) {
@@ -9,20 +11,22 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
   const [search, setSearch] = useState("");
   const [filteredItems, setFilteredItems] = useState({ ...sidebarState.animations.items });
   const [visibleItems, setVisibleItems] = useState([]);
-  const sidebarRef = useRef();
+
   const [isContactVisible, setIsContactVisible] = useState(false);
- 
+  const { ref: sidebarRef } = useModalBounds(() => setSidebarState((prev) => ({...prev, expanded: false})), sidebarState.expanded);
+  const { ref: contactRef } = useModalBounds(() => setIsContactVisible(false), isContactVisible);
+
 
   const items = useMemo(() => {
     const searchQuery = search.toLowerCase();
     return Object.values(sidebarState.animations.items).filter((item) => item.text.toLowerCase().includes(searchQuery));
   }, [search, sidebarState.animations.items]);
 
-  const addItem = (item) => {
+  const addItem = useCallback((item) => {
     setVisibleItems((prev) => 
       prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
     );
-  };
+  });
   const toggleContact = () => {
     setIsContactVisible(!isContactVisible);
   }
@@ -46,14 +50,17 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
       const item = items[key];
       return (
         <div key={key} className="p-1">
+          
           <div onClick={() => addItem(item.url)} className="cursor-pointer hover:text-gray-300 flex justify-between items-center">
             <Link to={item.url} aria-label={`Navigate to ${item.text}`}>{item.text}</Link>
             {item.children && (
               <span className="text-xl"  aria-label={`Toggle ${item.text} children`}>
-                {visibleItems.includes(item.url) ? '-' : '+'}
+                {visibleItems.includes(item.url) ? '-' : '+'} 
               </span>
+              
             )}
           </div>
+          
           {item.children && visibleItems.includes(item.url) && (
             <div className="flex-col pl-2 flex ">{renderItems(item.children)}</div>
           )}
@@ -65,11 +72,12 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
   return (
     <div>
       
-      <div ref={sidebarRef} className={`z-50 transition-all duration-300 ease-in-out p-4 lg:p-6 inset-0 border-r fixed border-gray-700 text-white h-full flex flex-col bg-dark text-sm md:text-base w-fit ${sidebarState.expanded ? "transform translate-x-[0%]" : "transform -translate-x-[100%]"}`}>
+      <div ref={sidebarRef} className={` z-50 transition-all duration-300 ease-in-out p-4 lg:p-6 inset-0 border-r fixed border-gray-700 text-white h-full flex flex-col bg-dark text-sm md:text-base w-fit ${sidebarState.expanded ? "transform translate-x-[0%]" : "transform -translate-x-[100%]"}`}>
         <div className="font-bold mb-2 cursor-pointer" onClick={() => nav("/")}>
           AnimLib
           
         </div>
+       
       
         <div className="relative">
           {search && <span className="absolute right-0 -top-5 text-xs">{Object.keys(filteredItems).length} Results</span>}
@@ -136,12 +144,12 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
       {isContactVisible && (
   <div className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center z-50">
     <div className="absolute top-4 right-4 cursor-pointer" onClick={toggleContact}>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-8">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-8">
+  <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
 </svg>
 
     </div>
-    <div className={`w-[80%] p-6 rounded-lg shadow-lg transition-transform duration-500 ease-out starting:-translate-x-[100vw]`}>
+    <div className={`w-[80%]  rounded-lg shadow-lg transition-transform duration-500 ease-out starting:-translate-x-[100vw]`} ref={contactRef}>
       <Contact />
     </div>
   </div>
