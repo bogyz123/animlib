@@ -10,9 +10,9 @@ export default function GradientText() {
     <Document>
       <Document.Title>Gradient Text</Document.Title>
       <div className="w-full h-screen p-2 flex flex-col" onClick={(e) => handleTooltipClick(e)}>
-        <span className="mx-auto bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent text-2xl font-bold py-2 text-center">
-          Just like with borders, creating gradient text requires creativity, since it cannot be done natively.
-        </span>
+        <Document.Explanation className="mx-auto bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent text-2xl font-bold py-2 text-center">
+          Creating gradieng text can be done by creating a gradient background underneath it and clipping the text to the background itself.
+        </Document.Explanation>
         <Document.Content>
           <div className="mt-5 pl-3 text-sm flex flex-col gap-y-2">
             <Document.Header>Creating Gradient Text</Document.Header>
@@ -34,7 +34,8 @@ export default function GradientText() {
               pages={[
                 `<span 
       className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-      I am gradient-colored!</span>
+      I am gradient-colored!
+</span>
   `,
               ]}
             />

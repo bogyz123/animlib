@@ -21,7 +21,10 @@ return (
             <div className="my-2 flex w-full gap-x-4 p-4 ">
             <button onClick={handleClick} data-index={0} className="cursor-pointer hover:shadow-none hover:translate-y-[5px] transition-all duration-300 rounded-full bg-card w-max p-3 md:p-4 border border-purple-600 shadow-lg shadow-purple-800">AnimLib</button>
             <button onClick={handleClick} data-index={1}  className="bg-card p-3 md:p-4 shine-element cursor-pointer">Apply here!</button>
+            
+
             </div>
+
             <div className="w-fit">
                {currentButtonIndex === 0 ? 
                <>
@@ -74,7 +77,6 @@ return (
 
 
 <div style={{border:'none', borderRadius:'0'}} className="hover:scale-105 transition-transform duration-150 ease shine-element">As for this button, a little bit more CSS is needed. We do styling just like the button before but here we use a before pseudo element that is a 120deg skewed gradient.</div>
-
 <div style={{border:'none', borderRadius:'0'}} className="hover:scale-105 transition-transform duration-150 ease shine-element">The pseudo element should be moved to -100px and the parent should be overflow hidden so it's hidden on the left side, and with animation, we make it move to the end of the parent.</div>
 <div style={{border:'none', borderRadius:'0'}} className="hover:scale-105 transition-transform duration-150 ease shine-element">The animation will run infinitely and will start at it's original position (-100px) so it doesnt look like an animation rather an endless shining loop. All this is happening on hover of the parent element.</div>
 

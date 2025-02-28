@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router";
 import "../index.css";
 import Contact from "./Contact";
@@ -50,7 +50,6 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
       const item = items[key];
       return (
         <div key={key} className="p-1">
-          
           <div onClick={() => addItem(item.url)} className="cursor-pointer hover:text-gray-300 flex justify-between items-center">
             <Link to={item.url} aria-label={`Navigate to ${item.text}`}>{item.text}</Link>
             {item.children && (
@@ -119,12 +118,18 @@ export default function Sidebar({ sidebarState, expandSidebar, setSidebarState }
                 </svg>
               </div>
 
-              <div className={`my-2 p-2 border-card rounded-md w-full border ${sidebarState.animations.visible ? "visible block" : "hidden"}`}>
+             {Object.keys(filteredItems).length > 0 &&  <div className={`my-2 p-2 border-card rounded-md w-full border ${sidebarState.animations.visible ? "visible block" : "hidden"}`}>
                 <ul className="text-sm md:text-base">{renderItems(filteredItems)}</ul>
-              </div>
+              </div>}
             </li>
           </ul>
-          <div className="bg-purple-500 text-center rounded-md p-1 md:p-2 cursor-pointer hover:bg-purple-600" onClick={toggleContact}>Contact Me</div>
+          <div className="bg-purple-500 text-center rounded-md  p-2 cursor-pointer hover:bg-purple-600 flex relative overflow-hidden group" onClick={toggleContact}>
+            <span className="mx-auto">Contact Me</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 rotate-180 absolute right-2 translate-x-[30px] group-hover:translate-x-[0] transition-transform duration-150 ease">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+</svg>
+
+          </div>
           <div className={`absolute md:h-[20%] h-[10%] top-1/2 translate-y-[-50%] flex items-center justify-center right-0 cursor-pointer border-gray-700 ${sidebarState.expanded && "visible"}`} onClick={expandSidebar}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />

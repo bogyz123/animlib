@@ -62,7 +62,6 @@ export default function Homepage() {
         card.style.opacity = "1";
         card.style.width = "100%";
 
-        
       });
  
       setAreCardsStacked(false);
@@ -70,7 +69,7 @@ export default function Homepage() {
   };
   const renderItems = () => {
     return itemData.map((item, index) => (
-      <div key={index} style={{ '--offset': `${index - 1}` }} className={`${index === itemData.length - 1 && 'col-span-full mb-2'} ${areCardsStacked ? "w-[70%] md:w-[50%]" : "w-full"} font-inter bg-card group rounded-lg p-6 md:p-8 lg:p-10 flex flex-col justify-center items-center example-item cursor-pointer relative`} onClick={() => navigateTo(item.url)}>
+      <div key={index} style={{ '--offset': `${index - 1}` }} className={`${index === itemData.length - 1 && 'col-span-full mb-2'} ${areCardsStacked ? " w-[70%] md:w-[50%] hover:translate-y-[-20px] ty duration-1000 border-2 border-purple-950" : "w-full"} font-inter bg-card group rounded-lg p-6 md:p-8 lg:p-10 flex flex-col justify-center items-center example-item cursor-pointer relative`} onClick={() => navigateTo(item.url)}>
         <h1 className={`${index === currentAnimation && !areCardsStacked ? '-translate-y-[50%] lg:-translate-y-[90%]' : ''} text-xl md:text-2xl group-hover:-translate-y-full w-fit example-item-title ${index === 0 && 'animate-typing inline-block justify-between overflow-hidden whitespace-nowrap mx-auto'}`} style={{
           "--animation-duration": "1.5s",
           "--animation-steps": "32",
